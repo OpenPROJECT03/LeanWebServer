@@ -1,0 +1,135 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "dev",
+            "displayName": "Development (Debug + Clang + Ninja)",
+            "description": "Debug configuration with clang++, Ninja, tests, and warnings enabled",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "LEAN_WEB_SERVER_BUILD_APPS": "ON",
+                "LEAN_WEB_SERVER_BUILD_TESTS": "OFF",
+                "LEAN_WEB_SERVER_ENABLE_WARNINGS": "ON",
+                "LEAN_WEB_SERVER_WARNINGS_AS_ERRORS": "OFF",
+                "LEAN_WEB_SERVER_INSTALL": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release (Optimized + Clang + Ninja)",
+            "description": "Release configuration with clang++ optimizations",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "LEAN_WEB_SERVER_BUILD_APPS": "ON",
+                "LEAN_WEB_SERVER_BUILD_TESTS": "OFF",
+                "LEAN_WEB_SERVER_ENABLE_WARNINGS": "ON",
+                "LEAN_WEB_SERVER_INSTALL": "ON"
+            }
+        },
+        {
+            "name": "asan",
+            "displayName": "Address & UB Sanitizers (Clang)",
+            "description": "Debug build with Clang ASan and UBSan enabled",
+            "inherits": "dev",
+            "cacheVariables": {
+                "LEAN_WEB_SERVER_ENABLE_SANITIZERS": "ON"
+            }
+        },
+        {
+            "name": "perf",
+            "displayName": "Performance Profiling (RelWithDebInfo + Frame Pointer)",
+            "description": "Optimized build with debug symbols and frame pointers for perf and flamegraph profiling",
+            "inherits": "base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "-O3 -g -DNDEBUG",
+                "LEAN_WEB_SERVER_ENABLE_PROFILING": "ON",
+                "LEAN_WEB_SERVER_BUILD_APPS": "ON",
+                "LEAN_WEB_SERVER_BUILD_TESTS": "OFF",
+                "LEAN_WEB_SERVER_ENABLE_WARNINGS": "ON",
+                "LEAN_WEB_SERVER_INSTALL": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "dev",
+            "configurePreset": "dev"
+        },
+        {
+            "name": "release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "asan",
+            "configurePreset": "asan"
+        },
+        {
+            "name": "perf",
+            "configurePreset": "perf"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "dev",
+            "configurePreset": "dev",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "asan",
+            "configurePreset": "asan",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        },
+        {
+            "name": "perf",
+            "configurePreset": "perf",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": false
+            }
+        }
+    ]
+}

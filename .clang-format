@@ -1,0 +1,27 @@
+---
+BasedOnStyle: Google
+Language: Cpp
+Standard: c++17
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+
+# Google 默认 AccessModifierOffset: -1 (配合 IndentWidth: 2)
+# IndentWidth 改为 4 后必须同步调整，否则 public/private 缩进错位
+AccessModifierOffset: -4
+
+# 比 Google 默认更严格：禁止单行短代码块
+# Google 默认: Empty / All / WithoutElse / true
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# 构造函数初始化列表风格 (Google 默认: BeforeComma)
+BreakConstructorInitializers: BeforeColon
+
+# Google 默认 DerivePointerAlignment: true 会从现有代码推断风格
+# 显式关闭以强制统一为 Left 对齐
+DerivePointerAlignment: false
+PointerAlignment: Left
